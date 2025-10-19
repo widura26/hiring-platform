@@ -2,33 +2,26 @@
 import { useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { fetchJobs } from "@/lib/data/jobsRepository";
-import { supabase } from "@/utils/supabase/server";
+
 const MainContent = () => {
-    const [jobs, setJobs] = useState<any>([]);
+    const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
-        const fetchTodos = async () => {
-            const { data, error } = await supabase
-                .from('jobs') 
-                .select('*');
-
-            if (error) {
-                console.error('Error fetching data:', error);
-            } else {
-                console.log(data)
-                setJobs(data);
-            }
-        };
-
-        fetchTodos();
+        const fetchData = async () => {
+            const data = await fetchJobs()
+            setJobs(data)
+        }
+        fetchData()
     }, []);
 
     return (
         <div className="text-white grid grid-cols-1 gap-4">
             {
-                jobs.map(() => {
-                    <JobCard/>
-                })
+                jobs.length > 0 ? (
+                    jobs.map((job:Job, index) => (
+                        <JobCard key={index}/>
+                    ))
+                ) : null
             }
         </div>
     );

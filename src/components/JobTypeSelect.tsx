@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export default function JobTypeSelect() {
   return (
-        <Select>
+        <Select name="job-type">
             <SelectTrigger className="border rounded-lg p-2 w-full">
             <SelectValue placeholder="Select job type" />
             </SelectTrigger>

@@ -1,6 +1,8 @@
+import { useModal } from '@/context/CreateJobModalContext';
 import React from 'react';
 
 const RightSidebar2 = () => {
+    const { openModal } = useModal()
     return (
         <div className="bg-white pt-5 pr-4 pb-5 text-white">
             <div className="rounded-2xl bg-black w-full h-full p-6 flex flex-col gap-6">
@@ -9,7 +11,7 @@ const RightSidebar2 = () => {
                     <p className='font-bold text-sm'>Create jobs, invite, and hire with ease</p>
                 </div>
                 <div className="w-full">
-                    <button className='bg-[#01959F] w-full text-white font-bold text-base py-[6px] px-4 rounded-lg'>Create a new job</button>
+                    <button type='button' onClick={openModal} className='bg-[#01959F] cursor-pointer w-full text-white font-bold text-base py-[6px] px-4 rounded-lg'>Create a new job</button>
                 </div>
             </div>
         </div>
