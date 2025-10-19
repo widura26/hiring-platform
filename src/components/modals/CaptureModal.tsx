@@ -1,14 +1,10 @@
 "use client"
-import React, { useRef, useState, useEffect } from 'react';
-import Webcam from "react-webcam";
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { FilesetResolver, GestureRecognizer, GestureRecognizerResult, DrawingUtils } from '@mediapipe/tasks-vision';
+import CaptureScreen from '../CaptureScreen';
 
-const videoConstraints = {
-    height: 720,
-    facingMode: "user"
-};
 
 const CaptureModal = (props:CaptureButtonProps) => {
-    const webcamRef = useRef<Webcam>(null);
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 py-10">
@@ -27,9 +23,8 @@ const CaptureModal = (props:CaptureButtonProps) => {
                 </div>
                 <div className="flex flex-col p-6 pt-0 gap-4">
                     {/* <div className="h-[400px]"></div> */}
-                    <div className="h-[720px] relative">
-                        <h2 className="text-xl font-semibold mb-4">{status}</h2>
-                        <Webcam ref={webcamRef} videoConstraints={videoConstraints} />
+                    <div className="h-[350px] bg-gray-900 rounded-lg overflow-hidden"> 
+                        <CaptureScreen/>
                     </div>
                     <div>
                         <p className='text-xs leading-5 text-[#1D1F20]'>To take a picture, follow the hand poses in the order shown below. The system will automatically capture the image once the final pose is detected.</p>
