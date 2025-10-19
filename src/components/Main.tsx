@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 import { fetchJobs } from "@/lib/data/jobsRepository";
 
 const MainContent = () => {
-    const [jobs, setJobs] = useState<Job[]>([]);
+    const [jobs, setJobs] = useState<JobMock[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +18,7 @@ const MainContent = () => {
         <div className="text-white grid grid-cols-1 gap-4">
             {
                 jobs.length > 0 ? (
-                    jobs.map((job:Job, index) => (
+                    jobs.map((job:JobMock, index) => (
                         <JobCard key={index}/>
                     ))
                 ) : null

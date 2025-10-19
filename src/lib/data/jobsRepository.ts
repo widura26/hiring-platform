@@ -1,10 +1,18 @@
 import { supabase } from '@/utils/supabase/client';
+import mockJobs from "@/mock/jobs.json"
 
-export const fetchJobs = async () => {
-    const { data, error } = await supabase.from('jobs').select('*')
-
-    if (error) throw new Error(error.message);
-    return data;
+export const fetchJobs = async (): Promise<JobMock[]> => {
+    if (process.env.NEXT_PUBLIC_SUPABASE_ENABLED !== 'true') {
+        console.log('🔇 Supabase disabled, returning mock data')
+        return mockJobs.data as JobMock[];
+    }
+    try {        
+        const { data, error } = await supabase.from('jobs').select('*')
+        if (error || !data) throw error
+        return data
+    } catch (error) {
+        return mockJobs.data as JobMock[];
+    }
 };
 
 export const createJobs = async (request:any) => {

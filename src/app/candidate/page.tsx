@@ -1,23 +1,39 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import JobCard from '@/components/candidate/JobCard';
 import ApplyButton from '@/components/candidate/ApplyButton';
 import Navbar from '@/components/candidate/Navbar';
+import { fetchJobs } from '@/lib/data/jobsRepository';
+import NotFoundJob from '@/components/NotFoundJob';
 
 const CandidatePage = () => {
+    const [jobs, setJobs] = useState<JobMock[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetchJobs()
+            setJobs(data)
+        }
+        fetchData()
+    }, []);
+
     return (
         <>  
             <Navbar/>
             <main className='py-10 flex-1 overflow-hidden'>
                 <div className='flex gap-6 h-full max-w-[1276px] mx-auto'>
                     <div className="flex-1 overflow-y-auto scrollbar pr-4">
-                        <div className="flex flex-col gap-4">
-                            <JobCard/>
-                            <JobCard/>
-                            <JobCard/>
-                            <JobCard/>
-                            <JobCard/>
-                            <JobCard/>
-                        </div>
+                        {
+                            jobs.length === 0 ? (
+                                <NotFoundJob />
+                            ) : (
+                                <div className="flex flex-col gap-4">
+                                { jobs.map((job: JobMock, index) => (
+                                    <JobCard key={index} />
+                                ))}
+                                </div>
+                            )
+                        }
                     </div>
                     <div className="flex-2 flex flex-col gap-6 bg-white border border-[#E0E0E0] rounded-lg p-6">
                         <div className="flex items-start justify-between gap-6 pb-6 border-[#E0E0E0] border-b">

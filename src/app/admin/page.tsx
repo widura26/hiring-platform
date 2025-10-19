@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
     const { open } = useBreadCrumb()
-    const [jobs, setJobs] = useState<any>([]);
+    const [jobs, setJobs] = useState<JobMock[]>([]);
     
     useEffect(() => {
         const fetchData = async () => {

@@ -3,6 +3,7 @@ import React from 'react';
 import { useModal } from '@/context/CreateJobModalContext';
 import JobTypeSelect from '../JobTypeSelect';
 import { createJobs } from '@/lib/data/jobsRepository';
+import ProfileInformation from '../Admin/ProfileInformation';
 
 const CreateJobModal = () => {
     const { open, closeModal } = useModal()
@@ -71,21 +72,7 @@ const CreateJobModal = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-4 p-4 border mt-4 border-[#EDEDED] rounded-lg">
-                            <h1 className='text-[#404040] text-sm font-bold'>Minimum Profile Information Required</h1>
-                            <div className="flex flex-col p-2">
-                                <div className="flex items-center gap-4 border-b border-[#E0E0E0] px-2 py-3">
-                                    <div className="flex-1">
-                                        <h1 className='text-[#404040] text-sm'>Full name</h1>
-                                    </div>
-                                    <div className="flex items-center gap-2 w-fit">
-                                        <button type='button' className='text-sm text-[#01959F] rounded-full px-3 py-1 border border-[#01959F]'>Mandatory</button>
-                                        <button type='button' className='text-sm text-[#01959F] rounded-full px-3 py-1 border border-[#01959F]'>Optional</button>
-                                        <button type='button' className='text-sm text-[#01959F] rounded-full px-3 py-1 border border-[#01959F]'>Off</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileInformation/>
                     </div>
                     <div className="h-fit p-6 flex items-center justify-end border-t border-[#E0E0E0]">
                         <button type='submit' className='bg-[#EDEDED] text-[#9E9E9E] border rounded-lg py-1 px-4 font-bold text-sm'>Publish Job</button>
