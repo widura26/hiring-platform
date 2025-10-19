@@ -1,0 +1,3 @@
+interface CaptureButtonProps {
+    setOpenModal: () => void
+}
