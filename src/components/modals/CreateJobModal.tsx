@@ -1,10 +1,8 @@
 "use client"
-import React, { useState } from 'react';
+import React from 'react';
 import { useModal } from '@/context/CreateJobModalContext';
-import JobTypeSelect from '../JobTypeSelect';
-import { createJob } from '@/lib/data/firebase/jobsRepository';
-import ProfileInformation from '../Admin/ProfileInformation';
-import { randomBytes } from 'crypto';
+import JobTypeSelect from '@/components/JobTypeSelect';
+import ProfileInformation from '@/components/Admin/ProfileInformation';
 import { useProfileInformation } from '@/context/ProfileInformationContext';
 
 const CreateJobModal = () => {
@@ -46,8 +44,11 @@ const CreateJobModal = () => {
         };
 
         try {
-            // await createJob(data)
-            console.log(data)
+            await fetch("/api/jobs", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            })
         } catch (err) {
             console.error('Insert failed:', err)
         }

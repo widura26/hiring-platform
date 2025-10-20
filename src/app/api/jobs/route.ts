@@ -11,7 +11,8 @@ export const GET = async () => {
     return NextResponse.json(jobs);
 };
 
-export const createJob = async (job: Job) => {
+export const POST = async (req: Request) => {
+    const job = await req.json()
     const docRef = await addDoc(collection(db, "jobs"), job);
     return NextResponse.json(docRef.id);
 }
