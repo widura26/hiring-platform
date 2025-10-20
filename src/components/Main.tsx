@@ -1,27 +1,25 @@
 "use client"
-import { useEffect, useState } from "react";
+import { Key } from "react";
+import useSWR from "swr";
 import JobCard from "./JobCard";
-import { fetchJobs } from "@/lib/data/firebase/jobsRepository";
+
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 const MainContent = () => {
-    const [jobs, setJobs] = useState<Job[]>([]);
+    const { data: jobs, error, isLoading } = useSWR("/api/jobs", fetcher, {
+        dedupingInterval: 60000,
+    });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetchJobs()
-            setJobs(data)
-        }
-        fetchData()
-    }, []);
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error loading jobs</div>;
 
     return (
         <div className="text-white grid grid-cols-1 gap-4">
             {
-                jobs.length > 0 ? (
-                    jobs.map((job:Job, index) => (
-                        <JobCard key={index}/>
-                    ))
-                ) : null
+                jobs.map((job:Job, index: Key | null | undefined) => (
+                    <JobCard job={job} key={index}/>
+                ))
             }
         </div>
     );

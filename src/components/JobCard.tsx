@@ -1,7 +1,7 @@
 import { useBreadCrumb } from '@/context/BreadCrumbContext';
 import React from 'react';
 
-const JobCard = () => {
+const JobCard = (props:{ job:Job }) => {
     const { openDetail } = useBreadCrumb()
     return (
         <div className="rounded-2xl flex flex-col gap-3 p-6 shadow-[0_4px_8px_rgba(0,0,0,0.1)] bg-white">
