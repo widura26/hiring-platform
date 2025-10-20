@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import JobCard from '@/components/candidate/JobCard';
 import ApplyButton from '@/components/candidate/ApplyButton';
 import Navbar from '@/components/candidate/Navbar';
-import { fetchJobs } from '@/lib/data/jobsRepository';
+import { fetchJobs } from '@/lib/data/firebase/jobsRepository';
 import NotFoundJob from '@/components/candidate/NotFoundJob';
 
 const CandidatePage = () => {

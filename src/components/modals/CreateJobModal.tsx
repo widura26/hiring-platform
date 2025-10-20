@@ -1,28 +1,53 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { useModal } from '@/context/CreateJobModalContext';
 import JobTypeSelect from '../JobTypeSelect';
-import { createJobs } from '@/lib/data/jobsRepository';
+import { createJob } from '@/lib/data/firebase/jobsRepository';
 import ProfileInformation from '../Admin/ProfileInformation';
+import { randomBytes } from 'crypto';
+import { useProfileInformation } from '@/context/ProfileInformationContext';
 
 const CreateJobModal = () => {
     const { open, closeModal } = useModal()
+    const { profileInformationDatas } = useProfileInformation();
+    
     if (!open) return null
 
     const submitJobs = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
-        const data = {
-            name: formData.get('job-name'),
-            type: formData.get('job-type'),
-            description: formData.get('job-description'),
-            number_of_candidate: formData.get('number-of-candidate'),
-            minimum_salary: formData.get('minimum-salary'),
-            maximum_salary: formData.get('maximum-salary'),
-        }
+
+        const data: Job = {
+            title: formData.get('job-name') as string,
+            type: formData.get('job-type') as string,
+            slug: (formData.get('job-name') as string).toLowerCase().replace(/\s+/g, '-'),
+            description: formData.get('job-description') as string,
+            number_of_candidate: Number(formData.get('number-of-candidate')),
+            minimum_salary: Number(formData.get('minimum-salary')),
+            maximum_salary: Number(formData.get('maximum-salary')),  
+            status: "active",
+            salary_range: {
+                min: Number(formData.get('minimum-salary')),
+                max: Number(formData.get('maximum-salary')),
+                currency: "IDR",
+                display_text: `Rp${Number(formData.get('minimum-salary')).toLocaleString()} - Rp${Number(formData.get('maximum-salary')).toLocaleString()}`
+            },
+            list_card: {
+                badge: "Active",
+                started_on_text: `started on ${new Date().toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                })}`,
+                cta: "Manage Job"
+            },
+            profileInformationField: profileInformationDatas,
+            created_at: new Date().toISOString()
+        };
+
         try {
-            const response = await createJobs(data)
-            console.log('Insert result:', response)
+            // await createJob(data)
+            console.log(data)
         } catch (err) {
             console.error('Insert failed:', err)
         }
@@ -62,9 +87,7 @@ const CreateJobModal = () => {
                                         <label htmlFor="maximum-salary" className="block text-xs font-medium text-[#404040]">Minimum Estimated Salary</label>
                                         <input id="maximum-salary" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Ex. 2" type="number" name="maximum-salary" />
                                     </div>
-                                    <div className="">
-
-                                    </div>
+                                    <hr className="border h-[1px]"></hr>
                                     <div className='flex-1'>
                                         <label htmlFor="minimum-salary" className="block text-xs font-medium text-[#404040]">Maximum Estimated Salary</label>
                                         <input id="minimum-salary" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Ex. 2" type="number" name="minimum-salary" />
@@ -72,7 +95,7 @@ const CreateJobModal = () => {
                                 </div>
                             </div>
                         </div>
-                        <ProfileInformation/>
+                        <ProfileInformation />
                     </div>
                     <div className="h-fit p-6 flex items-center justify-end border-t border-[#E0E0E0]">
                         <button type='submit' className='bg-[#EDEDED] text-[#9E9E9E] border rounded-lg py-1 px-4 font-bold text-sm'>Publish Job</button>

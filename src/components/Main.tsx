@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useState } from "react";
 import JobCard from "./JobCard";
-import { fetchJobs } from "@/lib/data/jobsRepository";
+import { fetchJobs } from "@/lib/data/firebase/jobsRepository";
 
 const MainContent = () => {
-    const [jobs, setJobs] = useState<JobMock[]>([]);
+    const [jobs, setJobs] = useState<Job[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +18,7 @@ const MainContent = () => {
         <div className="text-white grid grid-cols-1 gap-4">
             {
                 jobs.length > 0 ? (
-                    jobs.map((job:JobMock, index) => (
+                    jobs.map((job:Job, index) => (
                         <JobCard key={index}/>
                     ))
                 ) : null
