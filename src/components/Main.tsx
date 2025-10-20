@@ -17,7 +17,7 @@ const MainContent = () => {
     return (
         <div className="text-white grid grid-cols-1 gap-4">
             {
-                jobs.map((job:Job, index: Key | null | undefined) => (
+                jobs.map((job:Job, index: any) => (
                     <JobCard job={job} key={index}/>
                 ))
             }

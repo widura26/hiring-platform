@@ -2,6 +2,9 @@ import React from 'react';
 import type { Metadata } from "next";
 import { ModalProvider } from '@/context/CreateJobModalContext';
 import { BreadCrumbProvider } from '@/context/BreadCrumbContext';
+import { ProfileInformationProvider } from '@/context/ProfileInformationContext';
+import CreateJobModal from "@/components/modals/CreateJobModal";
+import Navbar2 from "@/components/Navbar2";
 
 export const metadata: Metadata = {
   title: "Candidate",
@@ -14,7 +17,15 @@ export default function AdminLayout({ children }: {
         return (
             <ModalProvider>
                 <BreadCrumbProvider>
-                    <div className='flex flex-col h-screen'>{children}</div>
+                    <ProfileInformationProvider>
+                        <div className='flex flex-col h-screen'>
+                            <main className="flex flex-col h-screen">
+                                <CreateJobModal/>
+                                <Navbar2/>
+                                {children}
+                            </main>
+                        </div>
+                    </ProfileInformationProvider>
                 </BreadCrumbProvider>
             </ModalProvider>
         )

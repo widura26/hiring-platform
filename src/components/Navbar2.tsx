@@ -1,3 +1,5 @@
+"use client"
+
 import { useBreadCrumb } from '@/context/BreadCrumbContext';
 import React from 'react';
 
