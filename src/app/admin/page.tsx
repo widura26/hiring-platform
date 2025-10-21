@@ -1,25 +1,16 @@
 "use client"
 import MainContent from "@/components/Main";
-
 import NotFoundJob from "@/components/NotFoundJob";
 import RightSidebar2 from "@/components/RightSidebar2";
 import SearchBar2 from "@/components/SearchBar2";
-import { useBreadCrumb } from "@/context/BreadCrumbContext";
-import { ProfileInformationProvider } from "@/context/ProfileInformationContext";
-import { fetchJobs } from "@/lib/data/jobsRepository";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function Home() {
-    const { open } = useBreadCrumb()
-    const [jobs, setJobs] = useState<JobMock[]>([]);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetchJobs()
-            setJobs(data)
-        }
-        fetchData()
-    }, []);
+    const { data: jobs, error, isLoading } = useSWR("/api/jobs", fetcher, {
+        dedupingInterval: 60000,
+    });
     
     return (
         <div className="bg-white flex h-full overflow-hidden pr-6 pt-4">
@@ -29,7 +20,7 @@ export default function Home() {
                         <SearchBar2/>
                     </div>
                     {
-                        jobs.length == 0 ? 
+                        jobs?.length == 0 ? 
                         <>
                             <NotFoundJob/>
                         </> :

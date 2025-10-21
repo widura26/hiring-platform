@@ -5,19 +5,36 @@ import Image from 'next/image';
 import CaptureButton from '@/components/candidate/CaptureButton';
 import avatar from '@/assets/avatar.png'
 import CaptureModal from '@/components/modals/CaptureModal';
-import { DatePicker } from '@/components/DatePicker';
 import PhoneNumber from '@/components/PhoneNumber';
+import DatePicker from '@/components/DatePicker';
+import DomicilePicker from '@/components/DomicilePicker';
 
 const Page = (props:any) => {
     const [openModal, setOpenModal] = useState(false);
-    const [dob, setDob] = useState<Date | undefined>()
+    const [dob, setDob] = useState<Date | undefined>();
+
+    const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const formData = new FormData(event.currentTarget)
+
+        const data = {
+            fullName: formData.get('full-name') as string,
+            dateOfBirth: dob,
+            gender: formData.get('gender') as string,
+            domicile: formData.get('domicile') as string,
+            phone: formData.get('phone') as string,
+            email: formData.get('email') as string,
+            Linkedin: formData.get('linkedin') as string,
+        };
+        console.log(data)
+    }
 
     return (
         <main className='py-[50px] flex-1 overflow-hidden bg-[#FAFAFA]'>
             {
                 openModal && <CaptureModal setOpenModal={() => setOpenModal(!openModal)}/> 
             }
-            <form className="bg-white border border-[#E0E0E0] w-full flex flex-col h-full mx-auto max-w-[700px]">
+            <form onSubmit={submit} className="bg-white border border-[#E0E0E0] w-full flex flex-col h-full mx-auto max-w-[700px]">
                 <div className="flex items-center justify-between p-10 pb-6 h-fit">
                     <div className="flex items-center gap-4 justify-between">
                         <Link href='/candidate/frontend-developer/apply'>
@@ -43,40 +60,45 @@ const Page = (props:any) => {
                             <CaptureButton setOpenModal={() => setOpenModal(!openModal)}/>
                         </div>
                         <div>
-                            <label htmlFor="job-name" className="block text-xs text-[#404040]">Full name <span className="text-red-500">*</span></label>
-                            <input id="job-name" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Enter your full name" type="text" name="job-name" />
+                            <label htmlFor="full-name" className="block text-xs text-[#404040]">Full name <span className="text-red-500">*</span></label>
+                            <input id="full-name" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Enter your full name" type="text" name="full-name" />
                         </div>
+                        {/* date of birth */}
                         <div>
-                            <label htmlFor="job-type" className="block text-xs text-[#404040]">Date of birth <span className="text-red-500">*</span></label>
+                            <label htmlFor="date-of-birth" className="block text-xs text-[#404040]">Date of birth <span className="text-red-500">*</span></label>
                             <div className="mt-2">
-                                <DatePicker value={dob} onChange={setDob} />
+                                <DatePicker styleCalendarBox='w-[376px]' styleInput='border-2 border-[#E0E0E0] py-2 px-4 text-black text-sm rounded-lg' />
                             </div>
                         </div>
                         <div>
-                            <label htmlFor="job-type" className="block text-xs text-[#404040]">Pronoun (gender) <span className="text-red-500">*</span></label>
+                            <label htmlFor="gender" className="block text-xs text-[#404040]">Pronoun (gender) <span className="text-red-500">*</span></label>
                             <div className="flex gap-10 mt-2">
                                 <div className="inline-flex items-center">
-                                    <label className="relative flex items-center cursor-pointer" htmlFor="html">
-                                    <input name="framework" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="html"/>
-                                    <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    </span>
+                                    <label className="relative flex items-center cursor-pointer" htmlFor="female">
+                                        <input name="gender" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="female"/>
+                                        <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        </span>
                                     </label>
-                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="html">HTML</label>
+                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="female">She/her (Female)</label>
                                 </div>
                                 <div className="inline-flex items-center">
-                                    <label className="relative flex items-center cursor-pointer" htmlFor="react">
-                                    <input name="framework" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="react"/>
-                                    <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    </span>
+                                    <label className="relative flex items-center cursor-pointer" htmlFor="male">
+                                        <input name="gender" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="male"/>
+                                        <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        </span>
                                     </label>
-                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="react">React</label>
+                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="male">He/him (Male)</label>
                                 </div>
                             </div>
                         </div>
+                        {/* domicile */}
                         <div>
                             <label htmlFor="domicile" className="block text-xs text-[#404040]">Domicile <span className="text-red-500">*</span></label>
-                            <input id="domicile" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Enter your domicile address" type="text" name="domicile" />
+                            <div className="mt-2">
+                                <DomicilePicker styleInput='py-2 px-4 text-sm text-black focus:outline-none border-2 border-[#E0E0E0] rounded-lg'/>
+                            </div>
                         </div>
+                        {/* phone */}
                         <div>
                             <label htmlFor="phone" className="block text-xs text-[#404040]">Phone number <span className="text-red-500">*</span></label>
                             <div className="mt-2">
@@ -85,7 +107,7 @@ const Page = (props:any) => {
                         </div>
                         <div>
                             <label htmlFor="email" className="block text-xs text-[#404040]">Email <span className="text-red-500">*</span></label>
-                            <input id="email" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Enter your email address" type="text" name="email" />
+                            <input id="email" className='text-sm mt-2 w-full focus:outline-none border-2 border-[#E0E0E0] py-2 px-4 rounded-lg text-[#000000]' placeholder="Enter your email address" type="email" name="email" />
                         </div>
                         <div>
                             <label htmlFor="linkedin" className="block text-xs text-[#404040]">Link Linkedin <span className="text-red-500">*</span></label>
@@ -94,7 +116,7 @@ const Page = (props:any) => {
                     </div>
                 </div>
                 <div className="h-fit py-6 px-10 flex items-center justify-end border-t border-[#E0E0E0]">
-                    <button type='button' className='bg-[#01959F] shadow-[0_1px_2px_rgba(0,0,0,0.12)] leading-7 cursor-pointer text-white border rounded-lg py-1.5 px-4 w-full font-bold text-base'>Submit</button>
+                    <button type='submit' className='bg-[#01959F] shadow-[0_1px_2px_rgba(0,0,0,0.12)] leading-7 cursor-pointer text-white border rounded-lg py-1.5 px-4 w-full font-bold text-base'>Submit</button>
                 </div>
             </form>
         </main>

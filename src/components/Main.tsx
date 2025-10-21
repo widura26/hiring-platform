@@ -1,5 +1,4 @@
 "use client"
-import { Key } from "react";
 import useSWR from "swr";
 import JobCard from "./JobCard";
 
