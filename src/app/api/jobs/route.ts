@@ -1,9 +1,9 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
-    const jobsCol = collection(db, "jobs");
+    const jobsCol = query(collection(db, "jobs"), where("status", "==", "active"));
     const jobSnapshot = await getDocs(jobsCol);
     const jobs = jobSnapshot.docs.map(
         doc => ({ id: doc.id, ...doc.data() } as Job)

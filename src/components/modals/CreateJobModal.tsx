@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { useModal } from '@/context/CreateJobModalContext';
 import JobTypeSelect from '@/components/JobTypeSelect';
 import ProfileInformation from '@/components/Admin/ProfileInformation';
@@ -8,6 +8,7 @@ import { useProfileInformation } from '@/context/ProfileInformationContext';
 const CreateJobModal = () => {
     const { open, closeModal } = useModal()
     const { profileInformationDatas } = useProfileInformation();
+    const [status, setStatus] = useState<string>("");
     
     if (!open) return null
 
@@ -18,12 +19,13 @@ const CreateJobModal = () => {
         const data: Job = {
             title: formData.get('job-name') as string,
             type: formData.get('job-type') as string,
+            company: formData.get('job-type') as string,
             slug: (formData.get('job-name') as string).toLowerCase().replace(/\s+/g, '-'),
             description: formData.get('job-description') as string,
             number_of_candidate: Number(formData.get('number-of-candidate')),
             minimum_salary: Number(formData.get('minimum-salary')),
             maximum_salary: Number(formData.get('maximum-salary')),  
-            status: "active",
+            status: status,
             salary_range: {
                 min: Number(formData.get('minimum-salary')),
                 max: Number(formData.get('maximum-salary')),
@@ -97,6 +99,35 @@ const CreateJobModal = () => {
                             </div>
                         </div>
                         <ProfileInformation />
+                        <div className="mt-4">
+                            <label htmlFor="status" className="block text-xs font-medium text-[#404040]">Status <span className="text-red-500">*</span></label>
+                            <div className="flex gap-10 mt-2">
+                                <div className="inline-flex items-center">
+                                    <label className="relative flex items-center cursor-pointer" htmlFor="active">
+                                        <input onChange={(e) => setStatus(e.target.value)} name="status" value="active" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="active"/>
+                                        <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        </span>
+                                    </label>
+                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="active">Active</label>
+                                </div>
+                                <div className="inline-flex items-center">
+                                    <label className="relative flex items-center cursor-pointer" htmlFor="inactive">
+                                        <input onChange={(e) => setStatus(e.target.value)} name="status" value="inactive" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="inactive"/>
+                                        <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        </span>
+                                    </label>
+                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="inactive">Inactive</label>
+                                </div>
+                                <div className="inline-flex items-center">
+                                    <label className="relative flex items-center cursor-pointer" htmlFor="draft">
+                                        <input onChange={(e) => setStatus(e.target.value)} name="status" value="draft" type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="draft"/>
+                                        <span className="absolute bg-[#01959F] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        </span>
+                                    </label>
+                                    <label className="ml-2 text-slate-600 cursor-pointer text-sm" htmlFor="draft">Draft</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="h-fit p-6 flex items-center justify-end border-t border-[#E0E0E0]">
                         <button type='submit' className='bg-[#EDEDED] text-[#9E9E9E] border rounded-lg py-1 px-4 font-bold text-sm'>Publish Job</button>

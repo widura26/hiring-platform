@@ -7,7 +7,6 @@ import { useProfileInformation } from '@/context/ProfileInformationContext';
 const ProfileInformation = () => {
     const { setProfileInformation } = useProfileInformation();
     const [profileInformation, setDatasProfileInformation] = useState<ProfileInformation>();
-    // const [status, setStatus] = useState("Mandatory");
 
     useEffect(() => {
         const fetchData = async () => {

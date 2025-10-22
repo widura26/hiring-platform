@@ -41,6 +41,8 @@ interface Job {
   title: string;
   type: string;
   slug: string;
+  company: string;  
+  department?: string;
   description: string;
   status: string;
   salary_range: SalaryRange;
