@@ -93,8 +93,7 @@ const CaptureScreen4 = (props:any) => {
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
                 streamRef.current = stream;
-                
-                // Tunggu video ready
+
                 await new Promise<void>((resolve) => {
                     if (videoRef.current) {
                         videoRef.current.onloadedmetadata = () => {
@@ -103,8 +102,7 @@ const CaptureScreen4 = (props:any) => {
                         };
                     }
                 });
-                
-                // Tunggu video benar-benar ready
+          
                 await new Promise(resolve => setTimeout(resolve, 500));
             }
         } catch (error) {
@@ -140,8 +138,7 @@ const CaptureScreen4 = (props:any) => {
             setHandsInstance(hands);
             
             setStatus('Kamera siap! Mode: Training');
-            
-            // Tunggu dan pastikan video sudah ready
+       
             if (videoRef.current) {
                 const video = videoRef.current;
                 const checkVideoReady = () => {
@@ -174,19 +171,14 @@ const CaptureScreen4 = (props:any) => {
                 return;
             }
 
-            // Cek video ready dan tidak sedang proses
             if (
-                !isProcessingRef.current &&
-                video.readyState === 4 &&
-                video.videoWidth > 0 &&
-                video.videoHeight > 0
+                !isProcessingRef.current && video.readyState === 4 && video.videoWidth > 0 && video.videoHeight > 0
             ) {
                 isProcessingRef.current = true;
                 try {
                     await hands.send({ image: video });
                 } catch (error) {
                     console.error('Error sending frame:', error);
-                    // Kalau error, tunggu sebentar sebelum coba lagi
                     await new Promise(resolve => setTimeout(resolve, 100));
                 }
                 isProcessingRef.current = false;
@@ -246,15 +238,13 @@ const CaptureScreen4 = (props:any) => {
             setHandDetected(true);
             const landmarks = results.multiHandLandmarks[0];
             setLastDetectedLandmarks(landmarks);
-
+            console.log("halo")
             drawHandLandmarks(ctx, landmarks, canvas.width, canvas.height);
 
             if (mode === 'detecting' && trainingDataset.length === 3) {
                 const matchedIndex = matchGesture(landmarks);
-                
                 if (matchedIndex === currentDetectionStep) {
                     poseHoldTimeRef.current += 1;
-                    
                     ctx.fillStyle = 'rgba(0, 255, 0, 0.9)';
                     ctx.font = 'bold 32px Arial';
                     ctx.textAlign = 'center';
@@ -289,12 +279,8 @@ const CaptureScreen4 = (props:any) => {
         }
     };
 
-    const drawHandLandmarks = (
-        ctx: CanvasRenderingContext2D,
-        landmarks: Landmark[],
-        width: number,
-        height: number
-    ): void => {
+   
+    const drawHandLandmarks = ( ctx: CanvasRenderingContext2D, landmarks: Landmark[], width: number, height: number): void => {
         ctx.fillStyle = '#00FF00';
         ctx.strokeStyle = '#00FF00';
         ctx.lineWidth = 3;
@@ -347,7 +333,6 @@ const CaptureScreen4 = (props:any) => {
         if (props.enable) {
             loadMediaPipeHands();
         } else {
-            // Cleanup saat modal ditutup
             if (animationRef.current) {
                 cancelAnimationFrame(animationRef.current);
                 animationRef.current = null;
@@ -375,7 +360,6 @@ const CaptureScreen4 = (props:any) => {
         };
     }, [props.enable]);
 
-    // Capture training data
     const captureTrainingData = () => {
         if (!lastDetectedLandmarks || !videoRef.current || !captureCanvasRef.current) {
             alert('Mohon tunjukkan tangan Anda terlebih dahulu!');
@@ -418,7 +402,6 @@ const CaptureScreen4 = (props:any) => {
         }
     };
 
-    // Mulai mode deteksi
     const startDetection = () => {
         if (trainingDataset.length < 3) {
             alert('Harap capture semua 3 pose terlebih dahulu!');
@@ -430,7 +413,6 @@ const CaptureScreen4 = (props:any) => {
         setStatus(`Tunjukkan ${POSE_NAMES[0]} (${POSE_DESCRIPTIONS[0]})`);
     };
 
-    // Reset semua
     const resetAll = () => {
         setTrainingDataset([]);
         setCurrentTrainingStep(0);
@@ -439,8 +421,7 @@ const CaptureScreen4 = (props:any) => {
         poseHoldTimeRef.current = 0;
         setStatus('Siap untuk capture dataset baru!');
     };
-
-    // Download dataset sebagai JSON
+   
     const downloadDataset = () => {
         const dataStr = JSON.stringify(trainingDataset, null, 2);
         const blob = new Blob([dataStr], { type: 'application/json' });
