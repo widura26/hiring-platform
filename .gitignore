@@ -9,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+/src/components/Main2.tsx
 # testing
 /coverage
 

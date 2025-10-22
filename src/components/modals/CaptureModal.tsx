@@ -5,6 +5,7 @@ import pose1 from '@/assets/poses/pose1.png'
 import pose2 from '@/assets/poses/pose2.png'
 import pose3 from '@/assets/poses/pose3.jpg'
 import CaptureScreen4 from '../CaptureScreen4';
+import CaptureScreen5 from '../CaptureScreen5';
 
 
 const CaptureModal = (props:CaptureButtonProps) => {
@@ -27,7 +28,7 @@ const CaptureModal = (props:CaptureButtonProps) => {
                 </div>
                 <div className="flex flex-col p-6 pt-0 gap-4">
                     <div className="bg-gray-900 h-[350px] rounded-lg overflow-hidden"> 
-                        <CaptureScreen4 enable={enable}/>
+                        <CaptureScreen4/>
                     </div>
                     <div>
                         <p className='text-xs leading-5 text-[#1D1F20]'>To take a picture, follow the hand poses in the order shown below. The system will automatically capture the image once the final pose is detected.</p>

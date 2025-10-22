@@ -53,7 +53,7 @@ const CandidatePage = () => {
                                                 <Image src={logogram} fill alt='rakamin' className="object-contain"/>
                                             </div>
                                             <div className=''>
-                                                <span className='bg-[#43936C] text-white rounded-sm py-1 px-2 text-xs font-bold'>Full-Time</span>
+                                                <span className='bg-[#43936C] text-white rounded-sm py-1 px-2 text-xs font-bold'>{selectedJob.type}</span>
                                                 <div className="mt-2">
                                                     <h1 className='text-[#404040] font-bold text-[18px]'>{selectedJob.title}</h1>
                                                     <p className='text-[#757575] text-sm'>Rakamin</p>

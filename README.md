@@ -5,15 +5,13 @@ Aplikasi web modern yang dibangun menggunakan Next.js untuk menampilkan dan meng
 
 ## 🧰 Tech Stack Used
 - **Framework**: [Next.js](https://nextjs.org/)
-- **Language**: TypeScript / JavaScript
-- **Styling**: Tailwind CSS / Shadcn UI / Chakra UI
-- **Database**: PostgreSQL / MySQL / MongoDB
-- **ORM**: Prisma / Drizzle ORM
-- **Package Manager**: npm / yarn / pnpm
-- **Linting & Formatting**: ESLint, Prettier
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Firebase
+- **Package Manager**: npm
 
 ## 🧪 How to Run Locally
 
 ### 1. Clone Repository
-```bash
+```bash 
 git clone https://github.com/username/project-name.git
