@@ -1,6 +1,5 @@
 "use client"
 import MainContent from "@/components/Main";
-import MainContent2 from "@/components/Main2";
 import CreateJobModal from "@/components/modals/CreateJobModal";
 import Navbar from "@/components/Navbar";
 import NotFoundJob from "@/components/NotFoundJob";
