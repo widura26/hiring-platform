@@ -64,6 +64,7 @@ export default function DomicilePicker({ onSelect, placeholder = "Choose your do
         <div className="relative">
             <div className={`flex items-center ${styleInput}`}>
                 <input
+                    name='domicile'
                     type="text"
                     value={isOpen ? searchQuery : selectedDomicile}
                     onChange={(e) => setSearchQuery(e.target.value)}

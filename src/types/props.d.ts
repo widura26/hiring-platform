@@ -66,3 +66,34 @@ interface Field {
 interface Validation {
   required: boolean | null
 }
+
+interface Landmark {
+    x: number;
+    y: number;
+    z: number;
+}
+
+interface HandResults {
+    multiHandLandmarks?: Landmark[][];
+    multiHandedness?: Array<{ label: string }>;
+    image: HTMLVideoElement;
+}
+
+interface GestureData {
+    poseName: string;
+    landmarks: Landmark[];
+    image: string;
+    timestamp: number;
+}
+
+interface MediaPipeHands {
+    setOptions: (options: {
+        maxNumHands: number;
+        modelComplexity: number;
+        minDetectionConfidence: number;
+        minTrackingConfidence: number;
+    }) => void;
+    onResults: (callback: (results: HandResults) => void) => void;
+    send: (data: { image: HTMLVideoElement }) => Promise<void>;
+    close: () => void;
+}
