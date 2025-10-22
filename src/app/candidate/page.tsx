@@ -7,6 +7,7 @@ import NotFoundJob from '@/components/candidate/NotFoundJob';
 import logogram from '@/assets/logogram.png'
 import useSWR from "swr";
 import Image from 'next/image';
+import { Spinner } from '@/components/Spinner';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -23,7 +24,7 @@ const CandidatePage = () => {
         }
     }, [jobs])
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div className='flex-1'><Spinner/></div>
     if (error) return <div>Error loading jobs</div>;
 
     return (

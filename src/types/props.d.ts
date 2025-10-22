@@ -52,6 +52,18 @@ interface Job {
   created_at?: string;
 }
 
+// interface Application {
+//   id: string;
+//   fullName: string; 
+//   email: string;          
+//   phone: string;      
+//   dateOfBirth: string;
+//   gender: "male" | "female";
+//   domicile: string;      
+//   linkedin: string;     
+//   jobId: string;          
+// }
+
 interface ProfileInformation {
   title: string
   fields: Field[]
@@ -97,3 +109,15 @@ interface MediaPipeHands {
     send: (data: { image: HTMLVideoElement }) => Promise<void>;
     close: () => void;
 }
+
+type Attribute = {
+  key: string;
+  label: string;
+  value: string;
+  order: number;
+};
+
+type Application = {
+  id: string;
+  attributes: Attribute[];
+};

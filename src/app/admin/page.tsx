@@ -3,6 +3,7 @@ import MainContent from "@/components/Main";
 import NotFoundJob from "@/components/NotFoundJob";
 import RightSidebar2 from "@/components/RightSidebar2";
 import SearchBar2 from "@/components/SearchBar2";
+import { Spinner } from "@/components/Spinner";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -11,6 +12,9 @@ export default function Home() {
     const { data: jobs, error, isLoading } = useSWR("/api/jobs", fetcher, {
         dedupingInterval: 60000,
     });
+
+    if (isLoading) return <div className='flex-1'><Spinner/></div>;
+    if (error) return <div>Error loading jobs</div>;
     
     return (
         <div className="bg-white flex h-full overflow-hidden pr-6 pt-4">

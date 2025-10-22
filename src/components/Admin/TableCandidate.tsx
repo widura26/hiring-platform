@@ -1,7 +1,28 @@
-import React from 'react';
+"use client"
+import React, { useEffect } from 'react';
 import CheckBox from '../Checkbox';
+import useSWR from 'swr';
+import { Spinner } from '../Spinner';
 
-const TableCandidate = () => {
+interface TableCandidateProps {
+  slug: string;
+}
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
+const TableCandidate:React.FC<TableCandidateProps> = ({ slug }) => {
+
+    const { data: candidates, error, isLoading } = useSWR(`/api/jobs/${slug}/candidates`, fetcher, {
+        dedupingInterval: 60000,
+    });
+
+    useEffect(() => {
+        if (candidates) console.log('candidates',candidates)
+    }, [candidates])
+
+    if (isLoading) return <div className='flex-1 h-full'><Spinner/></div>;
+    if (error) return <div>Error loading jobs</div>;
+
     return (
         
         <table className='w-full'>
@@ -20,138 +41,22 @@ const TableCandidate = () => {
                 </tr>
             </thead>
             <tbody className='text-sm text-[#404040]'>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
-                <tr className=' border-b border-[#EDEDED]'>
-                    <td className='flex items-center gap-2.5 p-4'>
-                        <CheckBox/>
-                        <p>Aurelie Yukiko</p>
-                    </td>
-                    <td className='p-4'>aurelieyukiko.yahoo.com</td>
-                    <td className='p-4'>082120908766</td>
-                    <td className='p-4'>30 January 2001</td>
-                    <td className='p-4'>Jakarta</td>
-                    <td className='p-4'>Female</td>
-                    <td className='p-4'>https://www.linkedin.com/in/username</td>
-                </tr>
+                {
+                    candidates.map((candidate:Application, index:number) => (
+                        <tr className='border-b border-[#EDEDED]' key={index}>
+                            <td className='flex items-center gap-2.5 p-4'>
+                                <CheckBox/>
+                                <p>{candidate.attributes[0].value}</p>
+                            </td>
+                            <td className='p-4'>{candidate.attributes[1].value}</td>
+                            <td className='p-4'>{candidate.attributes[2].value}</td>
+                            <td className='p-4'>{candidate.attributes[3].value}</td>
+                            <td className='p-4'>{candidate.attributes[4].value}</td>
+                            <td className='p-4'>{candidate.attributes[5].value}</td>
+                            <td className='p-4'>{candidate.attributes[6].value}</td>
+                        </tr>
+                    ))
+                }
             </tbody>
         </table>
     );

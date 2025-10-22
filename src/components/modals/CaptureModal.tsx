@@ -8,7 +8,7 @@ import CaptureScreen4 from '../CaptureScreen4';
 
 
 const CaptureModal = (props:CaptureButtonProps) => {
-    const [enable, setEnable] = useState(false);    
+    const [enable, setEnable] = useState(true);    
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 py-10">
@@ -17,7 +17,6 @@ const CaptureModal = (props:CaptureButtonProps) => {
                     <div className="flex flex-col">
                         <h1 className='font-bold text-[18px]'>Raise Your Hand to Capture</h1>
                         <p className='text-xs'>We’ll take the photo once your hand pose is detected.</p>
-                        <button className='bg-[#187cff]' type='button' onClick={() => setEnable(!enable)}>Enable Camera</button>
                     </div>
                     <button className='cursor-pointer' type='button' onClick={props.setOpenModal} title='button-close'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +26,7 @@ const CaptureModal = (props:CaptureButtonProps) => {
                     </button>
                 </div>
                 <div className="flex flex-col p-6 pt-0 gap-4">
-                    <div className="bg-gray-900 rounded-lg overflow-hidden"> 
+                    <div className="bg-gray-900 h-[350px] rounded-lg overflow-hidden"> 
                         <CaptureScreen4 enable={enable}/>
                     </div>
                     <div>

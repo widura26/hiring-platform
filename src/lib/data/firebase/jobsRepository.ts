@@ -23,3 +23,12 @@ export async function fetchJobBySlug(slug: string) {
   const doc = snapshot.docs[0]
   return { id: doc.id, ...doc.data() } as Job
 }
+
+export async function fetchCandidatesByJob(slug: string){
+  const jobsRef = collection(db, "jobs")
+  const q = query(jobsRef, where("slug", "==", slug))
+  const snapshot = await getDocs(q)
+  if (snapshot.empty) return null
+  const doc = snapshot.docs[0]
+  return { id: doc.id, ...doc.data() } as Job
+}

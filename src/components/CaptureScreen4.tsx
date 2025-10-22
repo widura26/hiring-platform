@@ -279,7 +279,6 @@ const CaptureScreen4 = (props:any) => {
         }
     };
 
-   
     const drawHandLandmarks = ( ctx: CanvasRenderingContext2D, landmarks: Landmark[], width: number, height: number): void => {
         ctx.fillStyle = '#00FF00';
         ctx.strokeStyle = '#00FF00';
@@ -438,7 +437,7 @@ const CaptureScreen4 = (props:any) => {
             <div className="">
                 <div className='relative w-full h-full'> 
                     <video 
-                        className='w-full h-full' 
+                        className='w-full h-[350px]' 
                         ref={videoRef} 
                         autoPlay 
                         playsInline 

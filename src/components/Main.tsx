@@ -1,6 +1,7 @@
 "use client"
 import useSWR from "swr";
 import JobCard from "./JobCard";
+import { Spinner } from "@/components/Spinner";
 
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -10,7 +11,7 @@ const MainContent = () => {
         dedupingInterval: 60000,
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <Spinner/>;
     if (error) return <div>Error loading jobs</div>;
 
     return (

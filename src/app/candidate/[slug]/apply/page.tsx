@@ -10,6 +10,7 @@ import DatePicker from '@/components/DatePicker';
 import DomicilePicker from '@/components/DomicilePicker';
 import useSWR from 'swr';
 import SuccessModal from '@/components/SuccessModal';
+import { Spinner } from '@/components/Spinner';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -25,7 +26,7 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
         dedupingInterval: 60000,
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div className='flex-1'><Spinner/></div>;
     if (error) return <div>Error loading jobs</div>;
 
     const submit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -33,13 +34,14 @@ const Page = ({ params }: { params: Promise<{ slug: string }> }) => {
         const formData = new FormData(event.currentTarget)
 
         const data = {
+            jobId: job.id,
             fullName: formData.get('full-name') as string,
             dateOfBirth: formData.get('date-of-birth') as string,
             gender: gender,
             domicile: formData.get('domicile') as string,
             phone: formData.get('phone_number') as string,
             email: formData.get('email') as string,
-            Linkedin: formData.get('linkedin') as string,
+            linkedin: formData.get('linkedin') as string,
         };
             
         try {
